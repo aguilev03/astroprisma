@@ -1,0 +1,79 @@
+<section class="character-sheet">
+
+	<!-- Header -->
+	<header class="sheet-header">
+		<h1 class="character-name">
+			{{document.name}}
+		</h1>
+	</header>
+
+	<!-- XP / Level -->
+	<section class="character-progression">
+		<div class="field">
+			<label>XP</label>
+			<input type="number" name="system.xp" value="{{system.xp}}" min="0" />
+		</div>
+
+		<div class="field">
+			<label>Level</label>
+			<input type="number" name="system.level" value="{{system.level}}" disabled />
+		</div>
+	</section>
+
+	<!-- Health -->
+	<section class="character-health">
+		<h2>Health</h2>
+
+		<div class="field-group">
+			<div class="field">
+				<label>Current</label>
+				<input type="number" name="system.health.value" value="{{system.health.value}}" min="0" />
+			</div>
+
+			<div class="field">
+				<label>Max</label>
+				<input type="number" name="system.health.max" value="{{system.health.max}}" min="0" />
+			</div>
+		</div>
+	</section>
+
+	<!-- Proficiencies -->
+	<section class="character-proficiencies">
+		<h2>Proficiencies</h2>
+
+		<div class="proficiency-block">
+			<h3>Weapons</h3>
+			<ul>
+				{{#each system.proficiencies.weapons as |weapon index|}}
+				<li>
+					<input type="text" name="system.proficiencies.weapons.{{index}}" value="{{weapon}}" />
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+
+		<div class="proficiency-block">
+			<h3>Skills</h3>
+			<ul>
+				{{#each system.proficiencies.skills as |skill index|}}
+				<li>
+					<input type="text" name="system.proficiencies.skills.{{index}}" value="{{skill}}" />
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+	</section>
+
+	<!-- Crest -->
+	<section class="character-crest">
+		<h2>Crest</h2>
+		<input type="text" name="system.crest" value="{{system.crest}}" placeholder="None" />
+	</section>
+
+	<!-- Biography -->
+	<section class="character-biography">
+		<h2>Biography</h2>
+		<textarea name="system.biography" rows="6">{{system.biography}}</textarea>
+	</section>
+
+</section>

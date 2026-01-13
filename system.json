@@ -1,0 +1,65 @@
+{
+	"id": "astroprisma",
+	"title": "ASTROPRISMA",
+	"description": "An unofficial implementation of ASTROPRISMA.",
+	"version": "0.1.0",
+	"compatibility": {
+		"minimum": "13.347",
+		"verified": "13"
+	},
+	"url": "https://github.com/Malbios/astroprisma",
+	"manifest": "https://raw.githubusercontent.com/Malbios/astroprisma/main/system.json",
+	"download": "https://github.com/Malbios/astroprisma/releases/download/release-0.1.0/astroprisma-release-0.1.0.zip",
+	"authors": [
+		{
+			"name": "Malbios",
+			"flags": {}
+		}
+	],
+	"esmodules": [
+		"astroprisma.js"
+	],
+	"styles": [
+		"styles/astroprisma.css"
+	],
+	"documentTypes": {
+		"Actor": {
+			"character": {},
+			"npc": {}
+		},
+		"Item": {
+			"weapon": {}
+		}
+	},
+	"packs": [
+		{
+			"name": "monsters",
+			"label": "My Sample Monsters",
+			"system": "astroprisma",
+			"path": "packs/monsters",
+			"type": "Actor",
+			"private": false,
+			"flags": {}
+		},
+		{
+			"name": "items",
+			"label": "My Sample Items",
+			"system": "astroprisma",
+			"path": "packs/items",
+			"type": "Item",
+			"private": false,
+			"flags": {}
+		}
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json",
+			"flags": {}
+		}
+	],
+	"socket": true,
+	"background": "systems/astroprisma/ui/astroprisma-background.jpg",
+	"flags": {}
+}
