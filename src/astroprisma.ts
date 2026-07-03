@@ -57,7 +57,7 @@ Hooks.on("init", () => {
 		"astroprisma",
 		AstroprismaItemSheet,
 		{
-			types: ["weapon", "armor", "gear", "consumable", "talent", "ability", "shipWeapon", "shipModule"],
+			types: ["weapon", "weaponMod", "armor", "questItem", "misc"],
 			makeDefault: true
 		}
 	);

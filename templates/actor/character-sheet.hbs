@@ -42,8 +42,7 @@
 		<button type="button" data-action="setTab" data-tab="stats" class="{{#if tabState.stats}}is-active{{/if}}">Stats</button>
 		<button type="button" data-action="setTab" data-tab="weapons" class="{{#if tabState.weapons}}is-active{{/if}}">Weapons</button>
 		<button type="button" data-action="setTab" data-tab="inventory" class="{{#if tabState.inventory}}is-active{{/if}}">Inventory</button>
-		<button type="button" data-action="setTab" data-tab="cybertech" class="{{#if tabState.cybertech}}is-active{{/if}}">Talents</button>
-		<button type="button" data-action="setTab" data-tab="memory" class="{{#if tabState.memory}}is-active{{/if}}">Abilities</button>
+		<button type="button" data-action="setTab" data-tab="cybertech" class="{{#if tabState.cybertech}}is-active{{/if}}">Weapon Mods</button>
 		<button type="button" data-action="setTab" data-tab="notes" class="{{#if tabState.notes}}is-active{{/if}}">Notes</button>
 	</nav>
 
@@ -92,17 +91,16 @@
 
 	{{#if tabState.weapons}}
 	<section class="astroprisma-panel astroprisma-card">
-		<h2>Weapons</h2>
+		<h2>Equipped Weapons</h2>
 		<ul class="astroprisma-item-list astroprisma-item-cards">
 			{{#each weaponItems}}
 			<li class="astroprisma-item-row">
 				<div>
 					<strong>{{name}}</strong>
-					<div class="astroprisma-item-meta">Damage {{system.damage}}{{#if system.range}} | Range {{system.range}}{{/if}}{{#if system.attackBonus}} | ATK +{{system.attackBonus}}{{/if}}</div>
+					<div class="astroprisma-item-meta">Damage {{system.damageDie}} | Stat {{system.stat}}{{#if modNames}} | Mods {{modNames}}{{/if}}</div>
 				</div>
 				<div class="astroprisma-item-controls">
 					<button type="button" data-action="rollItemAttack" data-item-id="{{id}}">Attack</button>
-					<button type="button" data-action="rollItemDamage" data-item-id="{{id}}">Damage</button>
 					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
 					<button type="button" data-action="deleteItem" data-item-id="{{id}}">Delete</button>
 				</div>
@@ -124,12 +122,9 @@
 			<li class="astroprisma-item-row">
 				<div>
 					<strong>{{name}}</strong>
-					<div class="astroprisma-item-meta">{{typeLabel}} | Qty {{system.quantity}}{{#if system.defenseBonus}} | DEF +{{system.defenseBonus}}{{/if}}{{#if system.weight}} | Wt {{system.weight}}{{/if}}</div>
+					<div class="astroprisma-item-meta">{{typeLabel}}{{#if system.damageDie}} | Damage {{system.damageDie}}{{/if}}{{#if system.stat}} | Stat {{system.stat}}{{/if}}</div>
 				</div>
 				<div class="astroprisma-item-controls">
-					{{#if isConsumable}}
-					<button type="button" data-action="useConsumable" data-item-id="{{id}}">Use</button>
-					{{/if}}
 					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
 					<button type="button" data-action="deleteItem" data-item-id="{{id}}">Delete</button>
 				</div>
@@ -145,13 +140,13 @@
 
 	{{#if tabState.cybertech}}
 	<section class="astroprisma-panel astroprisma-card">
-		<h2>Talents</h2>
+		<h2>Weapon Mods</h2>
 		<ul class="astroprisma-item-list astroprisma-item-cards">
-			{{#each talentItems}}
+			{{#each weaponModItems}}
 			<li class="astroprisma-item-row">
 				<div>
 					<strong>{{name}}</strong>
-					<div class="astroprisma-item-meta">{{system.description}}</div>
+					<div class="astroprisma-item-meta">{{#if system.damageBonusFormula}}Bonus {{system.damageBonusFormula}}{{/if}}{{#if system.statOverride}} | Override {{system.statOverride}}{{/if}}{{#if system.effectNotes}} | {{system.effectNotes}}{{/if}}</div>
 				</div>
 				<div class="astroprisma-item-controls">
 					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
@@ -159,33 +154,11 @@
 				</div>
 			</li>
 			{{else}}
-			<li>No talent items yet.</li>
+			<li>No weapon mods yet.</li>
 			{{/each}}
 		</ul>
-		<label>Talent Notes</label>
+		<label>Weapon Notes</label>
 		<textarea name="system.cybertech" rows="8">{{system.cybertech}}</textarea>
-	</section>
-	{{/if}}
-
-	{{#if tabState.memory}}
-	<section class="astroprisma-panel astroprisma-card">
-		<h2>Abilities</h2>
-		<ul class="astroprisma-item-list astroprisma-item-cards">
-			{{#each abilityItems}}
-			<li class="astroprisma-item-row">
-				<div>
-					<strong>{{name}}</strong>
-					<div class="astroprisma-item-meta">{{system.description}}</div>
-				</div>
-				<div class="astroprisma-item-controls">
-					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
-					<button type="button" data-action="deleteItem" data-item-id="{{id}}">Delete</button>
-				</div>
-			</li>
-			{{else}}
-			<li>No ability items yet.</li>
-			{{/each}}
-		</ul>
 	</section>
 	{{/if}}
 

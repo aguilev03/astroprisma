@@ -52,8 +52,7 @@ export class StarshipActorSheet extends HandlebarsApplicationMixin(ActorSheetV2)
 				conditions: this.#activeTab === "conditions",
 				notes: this.#activeTab === "notes"
 			},
-			moduleItems: actor.items.filter(item => item.type === "shipModule").map(decorateItem),
-			shipWeaponItems: actor.items.filter(item => item.type === "shipWeapon").map(decorateItem)
+			ownedItems: actor.items.map(decorateItem)
 		};
 	}
 
@@ -73,10 +72,6 @@ export class StarshipActorSheet extends HandlebarsApplicationMixin(ActorSheetV2)
 			case "rollItemAttack":
 				event.preventDefault();
 				void this.#withItem(target, item => item.rollAttack());
-				break;
-			case "rollItemDamage":
-				event.preventDefault();
-				void this.#withItem(target, item => item.rollDamage());
 				break;
 			case "toggleEquip":
 				event.preventDefault();

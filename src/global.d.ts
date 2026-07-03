@@ -15,13 +15,10 @@ declare global {
 					};
 					Item: {
 						weapon: typeof AstroprismaItemDataModel;
+						weaponMod: typeof AstroprismaItemDataModel;
 						armor: typeof AstroprismaItemDataModel;
-						gear: typeof AstroprismaItemDataModel;
-						consumable: typeof AstroprismaItemDataModel;
-						talent: typeof AstroprismaItemDataModel;
-						ability: typeof AstroprismaItemDataModel;
-						shipWeapon: typeof AstroprismaItemDataModel;
-						shipModule: typeof AstroprismaItemDataModel;
+						questItem: typeof AstroprismaItemDataModel;
+						misc: typeof AstroprismaItemDataModel;
 					};
 				}
 			}

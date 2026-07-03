@@ -30,13 +30,10 @@
 		},
 		"Item": {
 			"weapon": {},
+			"weaponMod": {},
 			"armor": {},
-			"gear": {},
-			"consumable": {},
-			"talent": {},
-			"ability": {},
-			"shipWeapon": {},
-			"shipModule": {}
+			"questItem": {},
+			"misc": {}
 		}
 	},
 	"packs": [

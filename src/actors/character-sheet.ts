@@ -9,7 +9,9 @@ function decorateItem(item: Item.Implementation) {
 		...item,
 		system: item.system,
 		typeLabel: item.type,
-		isConsumable: item.type === "consumable"
+		modNames: Array.isArray((item.system as any).mods)
+			? (item.system as any).mods.join(", ")
+			: ""
 	};
 }
 
@@ -56,10 +58,13 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 				memory: this.#activeTab === "memory",
 				notes: this.#activeTab === "notes"
 			},
-			weaponItems: actor.items.filter(item => item.type === "weapon").map(decorateItem),
-			inventoryItems: actor.items.filter(item => ["armor", "gear", "consumable"].includes(item.type)).map(decorateItem),
-			talentItems: actor.items.filter(item => item.type === "talent").map(decorateItem),
-			abilityItems: actor.items.filter(item => item.type === "ability").map(decorateItem)
+			weaponItems: actor.items
+				.filter(item => item.type === "weapon" && Boolean((item.system as any).equipped))
+				.map(decorateItem),
+			inventoryItems: actor.items
+				.filter(item => item.type !== "weaponMod" && !(item.type === "weapon" && Boolean((item.system as any).equipped)))
+				.map(decorateItem),
+			weaponModItems: actor.items.filter(item => item.type === "weaponMod").map(decorateItem)
 		};
 	}
 
@@ -83,14 +88,6 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 			case "rollItemAttack":
 				event.preventDefault();
 				void this.#withItem(target, item => item.rollAttack());
-				break;
-			case "rollItemDamage":
-				event.preventDefault();
-				void this.#withItem(target, item => item.rollDamage());
-				break;
-			case "useConsumable":
-				event.preventDefault();
-				void this.#withItem(target, item => item.useConsumable());
 				break;
 			case "toggleEquip":
 				event.preventDefault();

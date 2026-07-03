@@ -9,10 +9,6 @@
 			<input type="text" value="{{document.type}}" disabled />
 		</div>
 		<div class="astroprisma-field">
-			<label>Quantity</label>
-			<input type="number" name="system.quantity" value="{{system.quantity}}" min="0" step="1" />
-		</div>
-		<div class="astroprisma-field">
 			<label>Equipped</label>
 			<label class="astroprisma-checkbox">
 				<input type="checkbox" name="system.equipped" {{checked system.equipped}} />
@@ -22,34 +18,43 @@
 	</header>
 
 	<section class="astroprisma-panel astroprisma-grid astroprisma-grid-2">
+		{{#if isWeapon}}
 		<div class="astroprisma-field">
-			<label>Damage</label>
-			<input type="text" name="system.damage" value="{{system.damage}}" />
+			<label>Damage Die</label>
+			<input type="text" name="system.damageDie" value="{{system.damageDie}}" />
 		</div>
 		<div class="astroprisma-field">
-			<label>Range</label>
-			<input type="text" name="system.range" value="{{system.range}}" />
-		</div>
-		<div class="astroprisma-field">
-			<label>Attack Bonus</label>
-			<input type="number" name="system.attackBonus" value="{{system.attackBonus}}" step="1" />
-		</div>
-		<div class="astroprisma-field">
-			<label>Defense Bonus</label>
-			<input type="number" name="system.defenseBonus" value="{{system.defenseBonus}}" step="1" />
-		</div>
-		<div class="astroprisma-field">
-			<label>Cost</label>
-			<input type="number" name="system.cost" value="{{system.cost}}" min="0" step="0.01" />
-		</div>
-		<div class="astroprisma-field">
-			<label>Weight</label>
-			<input type="number" name="system.weight" value="{{system.weight}}" min="0" step="0.01" />
+			<label>Stat</label>
+			<select name="system.stat">
+				{{#each statOptions}}
+				<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+				{{/each}}
+			</select>
 		</div>
 		<div class="astroprisma-field astroprisma-field-wide">
-			<label>Tags</label>
-			<input type="text" name="system.tagsText" value="{{tagsString}}" placeholder="energy, sidearm, rare" />
+			<label>Mods</label>
+			<input type="text" name="system.modsText" value="{{modsString}}" placeholder="Comma-separated weapon mod IDs or names" />
 		</div>
+		{{/if}}
+
+		{{#if isWeaponMod}}
+		<div class="astroprisma-field">
+			<label>Damage Bonus Formula</label>
+			<input type="text" name="system.damageBonusFormula" value="{{system.damageBonusFormula}}" placeholder="+1, +1d4" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Stat Override</label>
+			<select name="system.statOverride">
+				{{#each overrideOptions}}
+				<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="astroprisma-field astroprisma-field-wide">
+			<label>Effect Notes</label>
+			<input type="text" name="system.effectNotes" value="{{system.effectNotes}}" />
+		</div>
+		{{/if}}
 	</section>
 
 	<section class="astroprisma-panel astroprisma-card">
