@@ -1,6 +1,17 @@
 // @ts-nocheck
+import { SystemItem } from "../items/system-item";
+
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
+
+function decorateItem(item: Item.Implementation) {
+	return {
+		...item,
+		system: item.system,
+		typeLabel: item.type,
+		isConsumable: item.type === "consumable"
+	};
+}
 
 export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 	#activeTab = "stats";
@@ -45,36 +56,63 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 				memory: this.#activeTab === "memory",
 				notes: this.#activeTab === "notes"
 			},
-			weaponItems: actor.items.filter(item => item.type === "weapon"),
-			gearItems: actor.items.filter(item => item.type === "gear"),
-			cybertechItems: actor.items.filter(item => item.type === "cybertech"),
-			memoryItems: actor.items.filter(item => item.type === "memory")
+			weaponItems: actor.items.filter(item => item.type === "weapon").map(decorateItem),
+			inventoryItems: actor.items.filter(item => ["armor", "gear", "consumable"].includes(item.type)).map(decorateItem),
+			talentItems: actor.items.filter(item => item.type === "talent").map(decorateItem),
+			abilityItems: actor.items.filter(item => item.type === "ability").map(decorateItem)
 		};
 	}
 
-	override async _onRender(context: any, options: any): Promise<void> {
-		await super._onRender(context, options);
+	protected override _canDragDrop(selector: string): boolean {
+		return this.isEditable;
+	}
 
-		const root = ((this.element as any) instanceof HTMLElement
-			? this.element
-			: (this.element as any)?.[0]) as HTMLElement | undefined;
+	override _onClickAction(event: PointerEvent, target: HTMLElement) {
+		super._onClickAction(event, target);
 
-		if (!root) return;
-
-		root.querySelectorAll<HTMLElement>("[data-tab]").forEach(button => {
-			button.addEventListener("click", event => {
+		switch (target.dataset.action) {
+			case "setTab":
 				event.preventDefault();
-				this.#activeTab = button.dataset.tab ?? "stats";
+				this.#activeTab = target.dataset.tab ?? "stats";
 				void this.render();
-			});
-		});
-
-		root.querySelectorAll<HTMLElement>("[data-roll-attribute]").forEach(button => {
-			button.addEventListener("click", event => {
+				break;
+			case "rollAttribute":
 				event.preventDefault();
-				void this.#rollAttribute(button.dataset.rollAttribute ?? "");
-			});
-		});
+				void this.#rollAttribute(target.dataset.attribute ?? "");
+				break;
+			case "rollItemAttack":
+				event.preventDefault();
+				void this.#withItem(target, item => item.rollAttack());
+				break;
+			case "rollItemDamage":
+				event.preventDefault();
+				void this.#withItem(target, item => item.rollDamage());
+				break;
+			case "useConsumable":
+				event.preventDefault();
+				void this.#withItem(target, item => item.useConsumable());
+				break;
+			case "toggleEquip":
+				event.preventDefault();
+				void this.#withItem(target, item => item.toggleEquipped());
+				break;
+			case "deleteItem":
+				event.preventDefault();
+				void this.#deleteItem(target.dataset.itemId ?? "");
+				break;
+		}
+	}
+
+	protected override async _onDropItem(event: DragEvent, item: Item.Implementation) {
+		if (!SystemItem.canActorOwnItem(this.actor.type, item.type)) {
+			ui.notifications?.warn(`${item.name} cannot be added to a ${this.actor.type}.`);
+			return null;
+		}
+
+		const itemData = item.toObject();
+		delete itemData._id;
+		const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+		return created.at(0) ?? null;
 	}
 
 	async #rollAttribute(attribute: string) {
@@ -87,5 +125,18 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 			speaker: ChatMessage.getSpeaker({ actor: this.document }),
 			flavor: `${this.document.name}: ${label} Check`
 		});
+	}
+
+	async #withItem(target: HTMLElement, callback: (item: SystemItem) => Promise<void>) {
+		const itemId = target.dataset.itemId ?? "";
+		const item = this.actor.items.get(itemId) as SystemItem | undefined;
+
+		if (!item) return;
+		await callback(item);
+	}
+
+	async #deleteItem(itemId: string) {
+		if (!itemId) return;
+		await this.actor.deleteEmbeddedDocuments("Item", [itemId]);
 	}
 }

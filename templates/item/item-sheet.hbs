@@ -1,0 +1,59 @@
+<section class="astroprisma-item-sheet">
+	<header class="astroprisma-header">
+		<div class="astroprisma-field astroprisma-field-wide">
+			<label>Name</label>
+			<input type="text" name="name" value="{{document.name}}" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Type</label>
+			<input type="text" value="{{document.type}}" disabled />
+		</div>
+		<div class="astroprisma-field">
+			<label>Quantity</label>
+			<input type="number" name="system.quantity" value="{{system.quantity}}" min="0" step="1" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Equipped</label>
+			<label class="astroprisma-checkbox">
+				<input type="checkbox" name="system.equipped" {{checked system.equipped}} />
+				<span>Active</span>
+			</label>
+		</div>
+	</header>
+
+	<section class="astroprisma-panel astroprisma-grid astroprisma-grid-2">
+		<div class="astroprisma-field">
+			<label>Damage</label>
+			<input type="text" name="system.damage" value="{{system.damage}}" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Range</label>
+			<input type="text" name="system.range" value="{{system.range}}" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Attack Bonus</label>
+			<input type="number" name="system.attackBonus" value="{{system.attackBonus}}" step="1" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Defense Bonus</label>
+			<input type="number" name="system.defenseBonus" value="{{system.defenseBonus}}" step="1" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Cost</label>
+			<input type="number" name="system.cost" value="{{system.cost}}" min="0" step="0.01" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Weight</label>
+			<input type="number" name="system.weight" value="{{system.weight}}" min="0" step="0.01" />
+		</div>
+		<div class="astroprisma-field astroprisma-field-wide">
+			<label>Tags</label>
+			<input type="text" name="system.tagsText" value="{{tagsString}}" placeholder="energy, sidearm, rare" />
+		</div>
+	</section>
+
+	<section class="astroprisma-panel astroprisma-card">
+		<label>Description</label>
+		<textarea name="system.description" rows="10">{{system.description}}</textarea>
+	</section>
+</section>

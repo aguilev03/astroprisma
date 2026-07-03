@@ -35,12 +35,12 @@
 	</header>
 
 	<nav class="astroprisma-tabs">
-		<button type="button" data-tab="control" class="{{#if tabState.control}}is-active{{/if}}">Control Panel</button>
-		<button type="button" data-tab="modules" class="{{#if tabState.modules}}is-active{{/if}}">Modules</button>
-		<button type="button" data-tab="cargo" class="{{#if tabState.cargo}}is-active{{/if}}">Cargo</button>
-		<button type="button" data-tab="crew" class="{{#if tabState.crew}}is-active{{/if}}">Crew</button>
-		<button type="button" data-tab="conditions" class="{{#if tabState.conditions}}is-active{{/if}}">Conditions</button>
-		<button type="button" data-tab="notes" class="{{#if tabState.notes}}is-active{{/if}}">Notes</button>
+		<button type="button" data-action="setTab" data-tab="control" class="{{#if tabState.control}}is-active{{/if}}">Control Panel</button>
+		<button type="button" data-action="setTab" data-tab="cargo" class="{{#if tabState.cargo}}is-active{{/if}}">Weapons</button>
+		<button type="button" data-action="setTab" data-tab="modules" class="{{#if tabState.modules}}is-active{{/if}}">Modules</button>
+		<button type="button" data-action="setTab" data-tab="crew" class="{{#if tabState.crew}}is-active{{/if}}">Crew</button>
+		<button type="button" data-action="setTab" data-tab="conditions" class="{{#if tabState.conditions}}is-active{{/if}}">Conditions</button>
+		<button type="button" data-action="setTab" data-tab="notes" class="{{#if tabState.notes}}is-active{{/if}}">Notes</button>
 	</nav>
 
 	{{#if tabState.control}}
@@ -65,11 +65,20 @@
 	{{#if tabState.modules}}
 	<section class="astroprisma-panel astroprisma-card">
 		<h2>Modules</h2>
-		<ul class="astroprisma-item-list">
+		<ul class="astroprisma-item-list astroprisma-item-cards">
 			{{#each moduleItems}}
-			<li>{{name}}</li>
+			<li class="astroprisma-item-row">
+				<div>
+					<strong>{{name}}</strong>
+					<div class="astroprisma-item-meta">{{system.description}}</div>
+				</div>
+				<div class="astroprisma-item-controls">
+					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
+					<button type="button" data-action="deleteItem" data-item-id="{{id}}">Delete</button>
+				</div>
+			</li>
 			{{else}}
-			<li>No starship modules yet.</li>
+			<li>No ship modules yet.</li>
 			{{/each}}
 		</ul>
 		<label>Module Notes</label>
@@ -79,15 +88,26 @@
 
 	{{#if tabState.cargo}}
 	<section class="astroprisma-panel astroprisma-card">
-		<h2>Cargo Hold</h2>
-		<ul class="astroprisma-item-list">
-			{{#each cargoItems}}
-			<li>{{name}}</li>
+		<h2>Ship Weapons</h2>
+		<ul class="astroprisma-item-list astroprisma-item-cards">
+			{{#each shipWeaponItems}}
+			<li class="astroprisma-item-row">
+				<div>
+					<strong>{{name}}</strong>
+					<div class="astroprisma-item-meta">Damage {{system.damage}}{{#if system.range}} | Range {{system.range}}{{/if}}{{#if system.attackBonus}} | ATK +{{system.attackBonus}}{{/if}}</div>
+				</div>
+				<div class="astroprisma-item-controls">
+					<button type="button" data-action="rollItemAttack" data-item-id="{{id}}">Attack</button>
+					<button type="button" data-action="rollItemDamage" data-item-id="{{id}}">Damage</button>
+					<button type="button" data-action="toggleEquip" data-item-id="{{id}}">{{#if system.equipped}}Unequip{{else}}Equip{{/if}}</button>
+					<button type="button" data-action="deleteItem" data-item-id="{{id}}">Delete</button>
+				</div>
+			</li>
 			{{else}}
-			<li>No cargo items yet.</li>
+			<li>No ship weapons yet.</li>
 			{{/each}}
 		</ul>
-		<label>Cargo Notes</label>
+		<label>Weapon Notes</label>
 		<textarea name="system.cargoHold" rows="8">{{system.cargoHold}}</textarea>
 	</section>
 	{{/if}}

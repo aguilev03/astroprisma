@@ -10,7 +10,8 @@
 }
 
 .astroprisma .character-sheet,
-.astroprisma .starship-sheet {
+.astroprisma .starship-sheet,
+.astroprisma .astroprisma-item-sheet {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
@@ -99,6 +100,44 @@
 .astroprisma-item-list {
 	margin: 0;
 	padding-left: 18px;
+}
+
+.astroprisma-item-cards {
+	list-style: none;
+	padding-left: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.astroprisma-item-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 10px;
+	border: 1px solid var(--astroprisma-border);
+	border-radius: 8px;
+	background: white;
+}
+
+.astroprisma-item-meta {
+	color: var(--astroprisma-muted);
+	font-size: 0.85rem;
+}
+
+.astroprisma-item-controls {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 6px;
+}
+
+.astroprisma-item-controls button {
+	border: 1px solid var(--astroprisma-border);
+	border-radius: 8px;
+	background: white;
+	padding: 6px 10px;
 }
 
 .astroprisma textarea {

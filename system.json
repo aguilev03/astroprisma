@@ -4,8 +4,8 @@
 	"description": "An unofficial implementation of ASTROPRISMA.",
 	"version": "0.1.0",
 	"compatibility": {
-		"minimum": "13.347",
-		"verified": "13"
+		"minimum": "14",
+		"verified": "14"
 	},
 	"url": "https://github.com/aguilev03/astroprisma",
 	"manifest": "https://raw.githubusercontent.com/aguilev03/astroprisma/main/system.json",
@@ -30,11 +30,13 @@
 		},
 		"Item": {
 			"weapon": {},
+			"armor": {},
 			"gear": {},
-			"cybertech": {},
-			"memory": {},
-			"starshipModule": {},
-			"cargo": {}
+			"consumable": {},
+			"talent": {},
+			"ability": {},
+			"shipWeapon": {},
+			"shipModule": {}
 		}
 	},
 	"packs": [
