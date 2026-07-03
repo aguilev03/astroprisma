@@ -7,12 +7,12 @@
 		"minimum": "13.347",
 		"verified": "13"
 	},
-	"url": "https://github.com/Malbios/astroprisma",
-	"manifest": "https://raw.githubusercontent.com/Malbios/astroprisma/main/system.json",
-	"download": "https://github.com/Malbios/astroprisma/releases/download/release-0.1.0/astroprisma-release-0.1.0.zip",
+	"url": "https://github.com/aguilev03/astroprisma",
+	"manifest": "https://raw.githubusercontent.com/aguilev03/astroprisma/main/system.json",
+	"download": "https://github.com/aguilev03/astroprisma/releases/download/release-0.1.0/astroprisma-release-0.1.0.zip",
 	"authors": [
 		{
-			"name": "Malbios",
+			"name": "aguilev03",
 			"flags": {}
 		}
 	],
