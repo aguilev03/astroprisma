@@ -25,10 +25,16 @@
 	"documentTypes": {
 		"Actor": {
 			"character": {},
-			"npc": {}
+			"npc": {},
+			"starship": {}
 		},
 		"Item": {
-			"weapon": {}
+			"weapon": {},
+			"gear": {},
+			"cybertech": {},
+			"memory": {},
+			"starshipModule": {},
+			"cargo": {}
 		}
 	},
 	"packs": [

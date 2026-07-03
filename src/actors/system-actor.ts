@@ -1,8 +1,8 @@
 import { CharacterDataModel } from "./character";
 import { NpcDataModel } from "./npc";
-import { PcDataModel } from "./pc";
+import { StarshipDataModel } from "./starship";
 
-export class SystemActor extends Actor<"character" | "pc" | "npc"> {
+export class SystemActor extends Actor<"character" | "npc" | "starship"> {
 
 	prepareDerivedData() {
 
@@ -13,21 +13,22 @@ export class SystemActor extends Actor<"character" | "pc" | "npc"> {
 			const model = this.system as CharacterDataModel;
 
 			model.health.value = Math.clamp(model.health.value ?? 0, 0, model.health.max ?? 10);
-			model.level = Math.max(1, Math.floor(model.xp / 1000) + 1);
-
-		} else if ((this.type as string) === "pc") {
-
-			const model = this.system as PcDataModel;
-
-			model.health.value = Math.clamp(model.health.value ?? 0, 0, model.health.max ?? 10);
-			model.level = Math.max(1, Math.floor(model.xp / 1000) + 1);
+			model.energy.value = Math.clamp(model.energy.value ?? 0, 0, model.energy.max ?? 10);
 
 		} else if ((this.type as string) === "npc") {
 
 			const model = this.system as NpcDataModel;
 
 			model.health.value = Math.clamp(model.health.value ?? 0, 0, model.health.max ?? 10);
-			model.level = Math.max(1, Math.floor(model.xp / 1000) + 1);
+			model.energy.value = Math.clamp(model.energy.value ?? 0, 0, model.energy.max ?? 10);
+
+		} else if ((this.type as string) === "starship") {
+
+			const model = this.system as StarshipDataModel;
+
+			model.hull.value = Math.clamp(model.hull.value ?? 0, 0, model.hull.max ?? 20);
+			model.shields.value = Math.clamp(model.shields.value ?? 0, 0, model.shields.max ?? 10);
+			model.fuel.value = Math.clamp(model.fuel.value ?? 0, 0, model.fuel.max ?? 10);
 		}
 	}
 }

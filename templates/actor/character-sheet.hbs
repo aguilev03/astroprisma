@@ -1,79 +1,157 @@
 <section class="character-sheet">
-
-	<!-- Header -->
-	<header class="sheet-header">
-		<h1 class="character-name">
-			{{document.name}}
-		</h1>
-	</header>
-
-	<!-- XP / Level -->
-	<section class="character-progression">
-		<div class="field">
-			<label>XP</label>
-			<input type="number" name="system.xp" value="{{system.xp}}" min="0" />
+	<header class="sheet-header astroprisma-header">
+		<div class="astroprisma-field astroprisma-field-wide">
+			<label>Name</label>
+			<input type="text" name="name" value="{{document.name}}" />
 		</div>
-
-		<div class="field">
-			<label>Level</label>
-			<input type="number" name="system.level" value="{{system.level}}" disabled />
+		<div class="astroprisma-field">
+			<label>Origin</label>
+			<input type="text" name="system.origin" value="{{system.origin}}" />
 		</div>
-	</section>
-
-	<!-- Health -->
-	<section class="character-health">
-		<h2>Health</h2>
-
-		<div class="field-group">
-			<div class="field">
-				<label>Current</label>
+		<div class="astroprisma-field">
+			<label>Health</label>
+			<div class="astroprisma-meter">
 				<input type="number" name="system.health.value" value="{{system.health.value}}" min="0" />
-			</div>
-
-			<div class="field">
-				<label>Max</label>
+				<span>/</span>
 				<input type="number" name="system.health.max" value="{{system.health.max}}" min="0" />
 			</div>
 		</div>
-	</section>
+		<div class="astroprisma-field">
+			<label>Energy</label>
+			<div class="astroprisma-meter">
+				<input type="number" name="system.energy.value" value="{{system.energy.value}}" min="0" />
+				<span>/</span>
+				<input type="number" name="system.energy.max" value="{{system.energy.max}}" min="0" />
+			</div>
+		</div>
+		<div class="astroprisma-field">
+			<label>Armor</label>
+			<input type="number" name="system.armor" value="{{system.armor}}" min="0" />
+		</div>
+		<div class="astroprisma-field">
+			<label>EXP</label>
+			<input type="number" name="system.exp" value="{{system.exp}}" min="0" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Hyperdrive</label>
+			<input type="number" name="system.hyperdrive" value="{{system.hyperdrive}}" min="0" />
+		</div>
+	</header>
 
-	<!-- Proficiencies -->
-	<section class="character-proficiencies">
-		<h2>Proficiencies</h2>
+	<nav class="astroprisma-tabs">
+		<button type="button" data-tab="stats" class="{{#if tabState.stats}}is-active{{/if}}">Stats</button>
+		<button type="button" data-tab="weapons" class="{{#if tabState.weapons}}is-active{{/if}}">Weapons</button>
+		<button type="button" data-tab="inventory" class="{{#if tabState.inventory}}is-active{{/if}}">Inventory</button>
+		<button type="button" data-tab="cybertech" class="{{#if tabState.cybertech}}is-active{{/if}}">Cybertech</button>
+		<button type="button" data-tab="memory" class="{{#if tabState.memory}}is-active{{/if}}">Memory</button>
+		<button type="button" data-tab="notes" class="{{#if tabState.notes}}is-active{{/if}}">Notes</button>
+	</nav>
 
-		<div class="proficiency-block">
-			<h3>Weapons</h3>
-			<ul>
-				{{#each system.proficiencies.weapons as |weapon index|}}
-				<li>
-					<input type="text" name="system.proficiencies.weapons.{{index}}" value="{{weapon}}" />
-				</li>
-				{{/each}}
-			</ul>
+	{{#if tabState.stats}}
+	<section class="astroprisma-panel astroprisma-grid astroprisma-grid-2">
+		<div class="astroprisma-card">
+			<h2>Attributes</h2>
+			<div class="astroprisma-attribute-row">
+				<label>Vigor</label>
+				<input type="number" name="system.attributes.vigor" value="{{system.attributes.vigor}}" min="0" />
+				<button type="button" data-roll-attribute="vigor">Roll</button>
+			</div>
+			<div class="astroprisma-attribute-row">
+				<label>Grace</label>
+				<input type="number" name="system.attributes.grace" value="{{system.attributes.grace}}" min="0" />
+				<button type="button" data-roll-attribute="grace">Roll</button>
+			</div>
+			<div class="astroprisma-attribute-row">
+				<label>Mind</label>
+				<input type="number" name="system.attributes.mind" value="{{system.attributes.mind}}" min="0" />
+				<button type="button" data-roll-attribute="mind">Roll</button>
+			</div>
+			<div class="astroprisma-attribute-row">
+				<label>Tech</label>
+				<input type="number" name="system.attributes.tech" value="{{system.attributes.tech}}" min="0" />
+				<button type="button" data-roll-attribute="tech">Roll</button>
+			</div>
 		</div>
 
-		<div class="proficiency-block">
-			<h3>Skills</h3>
-			<ul>
-				{{#each system.proficiencies.skills as |skill index|}}
-				<li>
-					<input type="text" name="system.proficiencies.skills.{{index}}" value="{{skill}}" />
-				</li>
-				{{/each}}
-			</ul>
+		<div class="astroprisma-card">
+			<h2>Status Conditions</h2>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.stun" {{checked system.conditions.stun}} /> Stun</label>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.breach" {{checked system.conditions.breach}} /> Breach</label>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.shock" {{checked system.conditions.shock}} /> Shock</label>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.silence" {{checked system.conditions.silence}} /> Silence</label>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.immunity" {{checked system.conditions.immunity}} /> Immunity</label>
+			<label class="astroprisma-checkbox"><input type="checkbox" name="system.conditions.overheat" {{checked system.conditions.overheat}} /> Overheat</label>
+
+			<div class="astroprisma-field">
+				<label>Memory Slots</label>
+				<input type="number" name="system.memorySlots" value="{{system.memorySlots}}" min="0" />
+			</div>
 		</div>
 	</section>
+	{{/if}}
 
-	<!-- Crest -->
-	<section class="character-crest">
-		<h2>Crest</h2>
-		<input type="text" name="system.crest" value="{{system.crest}}" placeholder="None" />
+	{{#if tabState.weapons}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Weapons</h2>
+		<ul class="astroprisma-item-list">
+			{{#each weaponItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No weapon items yet.</li>
+			{{/each}}
+		</ul>
+		<label>Weapon Notes</label>
+		<textarea name="system.weapons" rows="8">{{system.weapons}}</textarea>
 	</section>
+	{{/if}}
 
-	<!-- Biography -->
-	<section class="character-biography">
-		<h2>Biography</h2>
-		<textarea name="system.biography" rows="6">{{system.biography}}</textarea>
+	{{#if tabState.inventory}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Inventory</h2>
+		<ul class="astroprisma-item-list">
+			{{#each gearItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No gear items yet.</li>
+			{{/each}}
+		</ul>
+		<label>Inventory Notes</label>
+		<textarea name="system.inventory" rows="8">{{system.inventory}}</textarea>
 	</section>
+	{{/if}}
 
+	{{#if tabState.cybertech}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Cybertech</h2>
+		<ul class="astroprisma-item-list">
+			{{#each cybertechItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No cybertech items yet.</li>
+			{{/each}}
+		</ul>
+		<label>Cybertech Notes</label>
+		<textarea name="system.cybertech" rows="8">{{system.cybertech}}</textarea>
+	</section>
+	{{/if}}
+
+	{{#if tabState.memory}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Memory</h2>
+		<ul class="astroprisma-item-list">
+			{{#each memoryItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No memory items yet.</li>
+			{{/each}}
+		</ul>
+	</section>
+	{{/if}}
+
+	{{#if tabState.notes}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Notes</h2>
+		<textarea name="system.notes" rows="12">{{system.notes}}</textarea>
+	</section>
+	{{/if}}
 </section>

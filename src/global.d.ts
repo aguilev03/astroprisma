@@ -1,6 +1,6 @@
 import type { CharacterDataModel } from "./actors/character";
 import type { NpcDataModel } from "./actors/npc";
-import type { PcDataModel } from "./actors/pc";
+import type { StarshipDataModel } from "./actors/starship";
 
 declare global {
 	namespace foundry {
@@ -9,8 +9,8 @@ declare global {
 				interface DataModelConfig {
 					Actor: {
 						character: typeof CharacterDataModel;
-						pc: typeof PcDataModel
 						npc: typeof NpcDataModel;
+						starship: typeof StarshipDataModel;
 					};
 				}
 			}

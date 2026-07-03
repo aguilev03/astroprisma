@@ -1,0 +1,107 @@
+.astroprisma.sheet {
+	--astroprisma-border: #c7d0dd;
+	--astroprisma-muted: #5d6775;
+	--astroprisma-panel: #f5f7fb;
+	--astroprisma-accent: #23456b;
+}
+
+.astroprisma .window-content {
+	background: #eef2f7;
+}
+
+.astroprisma .character-sheet,
+.astroprisma .starship-sheet {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 12px;
+}
+
+.astroprisma-header,
+.astroprisma-grid {
+	display: grid;
+	gap: 12px;
+}
+
+.astroprisma-header {
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.astroprisma-grid-2 {
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.astroprisma-field,
+.astroprisma-card {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.astroprisma-field-wide {
+	grid-column: span 2;
+}
+
+.astroprisma-card,
+.astroprisma-panel {
+	padding: 12px;
+	border: 1px solid var(--astroprisma-border);
+	border-radius: 10px;
+	background: var(--astroprisma-panel);
+}
+
+.astroprisma-field label,
+.astroprisma-card h2,
+.astroprisma-card label {
+	color: var(--astroprisma-muted);
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.astroprisma-meter,
+.astroprisma-attribute-row {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	gap: 8px;
+}
+
+.astroprisma-attribute-row {
+	grid-template-columns: 90px 1fr auto;
+}
+
+.astroprisma-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.astroprisma-tabs button,
+.astroprisma-attribute-row button {
+	border: 1px solid var(--astroprisma-border);
+	border-radius: 8px;
+	background: white;
+	padding: 6px 10px;
+}
+
+.astroprisma-tabs button.is-active {
+	background: var(--astroprisma-accent);
+	border-color: var(--astroprisma-accent);
+	color: white;
+}
+
+.astroprisma-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.astroprisma-item-list {
+	margin: 0;
+	padding-left: 18px;
+}
+
+.astroprisma textarea {
+	min-height: 120px;
+	resize: vertical;
+}

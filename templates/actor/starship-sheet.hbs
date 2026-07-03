@@ -1,0 +1,115 @@
+<section class="starship-sheet">
+	<header class="sheet-header astroprisma-header">
+		<div class="astroprisma-field astroprisma-field-wide">
+			<label>Starship Name</label>
+			<input type="text" name="name" value="{{document.name}}" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Ship Type</label>
+			<input type="text" name="system.shipType" value="{{system.shipType}}" />
+		</div>
+		<div class="astroprisma-field">
+			<label>Hull</label>
+			<div class="astroprisma-meter">
+				<input type="number" name="system.hull.value" value="{{system.hull.value}}" min="0" />
+				<span>/</span>
+				<input type="number" name="system.hull.max" value="{{system.hull.max}}" min="0" />
+			</div>
+		</div>
+		<div class="astroprisma-field">
+			<label>Shields</label>
+			<div class="astroprisma-meter">
+				<input type="number" name="system.shields.value" value="{{system.shields.value}}" min="0" />
+				<span>/</span>
+				<input type="number" name="system.shields.max" value="{{system.shields.max}}" min="0" />
+			</div>
+		</div>
+		<div class="astroprisma-field">
+			<label>Fuel</label>
+			<div class="astroprisma-meter">
+				<input type="number" name="system.fuel.value" value="{{system.fuel.value}}" min="0" />
+				<span>/</span>
+				<input type="number" name="system.fuel.max" value="{{system.fuel.max}}" min="0" />
+			</div>
+		</div>
+	</header>
+
+	<nav class="astroprisma-tabs">
+		<button type="button" data-tab="control" class="{{#if tabState.control}}is-active{{/if}}">Control Panel</button>
+		<button type="button" data-tab="modules" class="{{#if tabState.modules}}is-active{{/if}}">Modules</button>
+		<button type="button" data-tab="cargo" class="{{#if tabState.cargo}}is-active{{/if}}">Cargo</button>
+		<button type="button" data-tab="crew" class="{{#if tabState.crew}}is-active{{/if}}">Crew</button>
+		<button type="button" data-tab="conditions" class="{{#if tabState.conditions}}is-active{{/if}}">Conditions</button>
+		<button type="button" data-tab="notes" class="{{#if tabState.notes}}is-active{{/if}}">Notes</button>
+	</nav>
+
+	{{#if tabState.control}}
+	<section class="astroprisma-panel astroprisma-grid astroprisma-grid-2">
+		<div class="astroprisma-card">
+			<div class="astroprisma-field">
+				<label>Control</label>
+				<input type="number" name="system.control" value="{{system.control}}" min="0" />
+			</div>
+			<div class="astroprisma-field">
+				<label>Engines</label>
+				<input type="number" name="system.engines" value="{{system.engines}}" min="0" />
+			</div>
+		</div>
+		<div class="astroprisma-card">
+			<label>Quick Conditions</label>
+			<textarea name="system.conditions" rows="6">{{system.conditions}}</textarea>
+		</div>
+	</section>
+	{{/if}}
+
+	{{#if tabState.modules}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Modules</h2>
+		<ul class="astroprisma-item-list">
+			{{#each moduleItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No starship modules yet.</li>
+			{{/each}}
+		</ul>
+		<label>Module Notes</label>
+		<textarea name="system.modules" rows="8">{{system.modules}}</textarea>
+	</section>
+	{{/if}}
+
+	{{#if tabState.cargo}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Cargo Hold</h2>
+		<ul class="astroprisma-item-list">
+			{{#each cargoItems}}
+			<li>{{name}}</li>
+			{{else}}
+			<li>No cargo items yet.</li>
+			{{/each}}
+		</ul>
+		<label>Cargo Notes</label>
+		<textarea name="system.cargoHold" rows="8">{{system.cargoHold}}</textarea>
+	</section>
+	{{/if}}
+
+	{{#if tabState.crew}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Crew</h2>
+		<textarea name="system.crew" rows="12">{{system.crew}}</textarea>
+	</section>
+	{{/if}}
+
+	{{#if tabState.conditions}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Conditions</h2>
+		<textarea name="system.conditions" rows="12">{{system.conditions}}</textarea>
+	</section>
+	{{/if}}
+
+	{{#if tabState.notes}}
+	<section class="astroprisma-panel astroprisma-card">
+		<h2>Notes</h2>
+		<textarea name="system.notes" rows="12">{{system.notes}}</textarea>
+	</section>
+	{{/if}}
+</section>

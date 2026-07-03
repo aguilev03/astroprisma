@@ -1,90 +1,34 @@
-const { TypeDataModel } = foundry.abstract;
-const { HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField } = foundry.data.fields;
+import { clampMeter, defineCharacterSchema, migrateCharacterSource, type CharacterSchema } from "./actor-data";
 
-export interface CharacterSchema extends foundry.data.fields.DataSchema {
-	xp: number;
-	level: number;
-	health: {
-		value: number;
-		max: number;
-	};
-	proficiencies: {
-		weapons: string[];
-		skills: string[];
-	}
-	crest: string | null;
-	biography: string;
-	[key: string]: any;
-}
+const { TypeDataModel } = foundry.abstract;
 
 export class CharacterDataModel extends TypeDataModel<CharacterSchema, Actor> {
 
 	static defineSchema() {
-
-		return {
-			xp: new NumberField({
-				required: true,
-				integer: true,
-				min: 0,
-				initial: 0
-			}),
-			level: new NumberField({
-				required: true,
-				integer: true,
-				min: 1,
-				initial: 1
-			}),
-			health: new SchemaField({
-				value: new NumberField({
-					required: true,
-					integer: true,
-					min: 0,
-					initial: 10
-				}),
-				max: new NumberField({
-					required: true,
-					integer: true,
-					min: 1,
-					initial: 10
-				})
-			}),
-			proficiencies: new SchemaField({
-				weapons: new ArrayField(new StringField()),
-				skills: new ArrayField(new StringField()),
-			}),
-			crest: new FilePathField({ required: false, categories: ["IMAGE"] }),
-			biography: new HTMLField(),
-		};
+		return defineCharacterSchema();
 	}
 
 	static migrateData(source: CharacterSchema): CharacterSchema {
-		const proficiencies = source.proficiencies ?? {};
-
-		if ("weapons" in proficiencies && Array.isArray(proficiencies.weapons)) {
-			proficiencies.weapons = proficiencies.weapons.map(weapon =>
-				weapon === "bmr" ? "boomerang" : weapon
-			);
-		}
-
-		source.biography ??= "";
-		source.health ??= { value: 10, max: 10 };
-		source.level ??= 1;
-		source.xp ??= 0;
-
-		return source;
+		return migrateCharacterSource(source) as CharacterSchema;
 	}
 
-	declare xp: number;
-	declare level: number;
-	declare health: { value: number; max: number };
-	declare proficiencies: { weapons: string[]; skills: string[] };
-	declare crest: string | null;
-	declare biography: string;
+	declare origin: string;
+	declare health: CharacterSchema["health"];
+	declare energy: CharacterSchema["energy"];
+	declare armor: number;
+	declare exp: number;
+	declare hyperdrive: number;
+	declare attributes: CharacterSchema["attributes"];
+	declare conditions: CharacterSchema["conditions"];
+	declare memorySlots: number;
+	declare weapons: string;
+	declare inventory: string;
+	declare cybertech: string;
+	declare notes: string;
 
 	prepareDerivedData() {
-
 		super.prepareDerivedData();
-
-		this.health.value = Math.clamp(this.health.value ?? 0, 0, this.health.max ?? 10);
+		clampMeter(this.health, 10);
+		clampMeter(this.energy, 10);
 	}
 }

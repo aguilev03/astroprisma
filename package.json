@@ -5,7 +5,7 @@
   "description": "An unofficial implementation of ASTROPRISMA.",
   "type": "module",
   "scripts": {
-    "build": "esbuild src/astroprisma.ts --bundle --minify --outfile=dist/astroprisma.js --platform=browser --format=esm --sourcemap --tsconfig=tsconfig.json && xcopy system.json dist\\ /Y /Q && xcopy lang dist\\lang\\ /E /I /Y /Q && xcopy styles dist\\styles\\ /E /I /Y /Q && xcopy ui dist\\ui\\ /E /I /Y /Q && xcopy packs dist\\packs\\ /E /I /Y /Q && xcopy templates dist\\templates\\ /E /I /Y /Q",
+    "build": "rm -rf dist && mkdir -p dist && esbuild src/astroprisma.ts --bundle --minify --outfile=dist/astroprisma.js --platform=browser --format=esm --sourcemap --tsconfig=tsconfig.json && cp system.json dist/ && cp -r lang styles ui templates dist/",
     "watch": "esbuild src/astroprisma.ts --bundle --outfile=dist/astroprisma.js --platform=browser --format=esm --sourcemap --watch",
     "check": "tsc --noEmit"
   },
